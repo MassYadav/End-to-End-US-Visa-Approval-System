@@ -9,6 +9,18 @@ from pandas import DataFrame
 from us_visa.exception import USvisaException
 from us_visa.logger import logging
 
+import shutil
+
+def copy_file(source_path: str, destination_path: str) -> None:
+    """
+    Copy a file from source_path to destination_path.
+    """
+    try:
+        os.makedirs(os.path.dirname(destination_path), exist_ok=True)
+        shutil.copy2(source_path, destination_path)
+        logging.info(f"Copied file from {source_path} to {destination_path}")
+    except Exception as e:
+        raise USvisaException(e, sys) from e
 
 def read_yaml_file(file_path: str) -> dict:
     try:
